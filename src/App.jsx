@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import "./App.scss";
-import HomePage from "./layouts/AppLayout/pages/HomePage/HomePAge";
+import HomePage from "./layouts/AppLayout/pages/HomePage/HomePage";
 import AppLayout from "./layouts/AppLayout/AppLayout";
 import TopBar from "./components/TopBar/TopBar";
 
