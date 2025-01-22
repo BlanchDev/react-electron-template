@@ -10,7 +10,7 @@ function getPath(...args) {
 }
 
 function getDistPath(...args) {
-  return path.join(__dirname, "..", "..", "dist", ...args);
+  return path.join(__dirname, "..", "..", "..", "dist-react", ...args);
 }
 
 const storePath = path.join(app.getPath("userData"), "StoreFolder");

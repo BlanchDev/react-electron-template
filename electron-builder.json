@@ -1,0 +1,85 @@
+{
+  "appId": "com.react-electron-template.desktop",
+  "productName": "React & Electron template",
+  "directories": {
+    "output": "dist-electron",
+    "buildResources": "src/electron/assets"
+  },
+  "asar": true,
+  "compression": "maximum",
+  "files": ["dist-react/**/*", "src/electron/**/*", "package.json"],
+  "extraResources": [
+    {
+      "from": "src/electron/assets/",
+      "to": "assets",
+      "filter": ["**/*"]
+    }
+  ],
+  "nsis": {
+    "oneClick": false,
+    "allowToChangeInstallationDirectory": true,
+    "createDesktopShortcut": true,
+    "createStartMenuShortcut": true,
+    "shortcutName": "React & Electron template",
+    "installerIcon": "src/electron/assets/logo.ico",
+    "uninstallerIcon": "src/electron/assets/logo.ico",
+    "allowElevation": true,
+    "runAfterFinish": true
+  },
+  "win": {
+    "target": [
+      {
+        "target": "nsis",
+        "arch": ["x64"]
+      }
+    ],
+    "artifactName": "${productName}-${version}-${arch}.${ext}",
+    "icon": "src/electron/assets/logo.ico"
+  },
+  "mac": {
+    "target": [
+      {
+        "target": "dmg",
+        "arch": ["x64", "arm64"]
+      }
+    ],
+    "icon": "src/electron/assets/logo.png",
+    "category": "public.app-category.productivity",
+    "darkModeSupport": true,
+    "artifactName": "${productName}-${version}-${arch}.${ext}",
+    "extendInfo": {
+      "LSMinimumSystemVersion": "10.15.0",
+      "NSHighResolutionCapable": true,
+      "NSRequiresAquaSystemAppearance": false
+    }
+  },
+  "dmg": {
+    "icon": "src/electron/assets/logo.png",
+    "iconSize": 100,
+    "contents": [
+      {
+        "x": 130,
+        "y": 220
+      },
+      {
+        "x": 410,
+        "y": 220,
+        "type": "link",
+        "path": "/Applications"
+      }
+    ],
+    "window": {
+      "width": 540,
+      "height": 400
+    },
+    "backgroundColor": "#141414",
+    "title": "${productName}"
+  },
+  "publish": {
+    "provider": "github",
+    "owner": "your-github-username",
+    "repo": "react-electron-template",
+    "private": false,
+    "releaseType": "release"
+  }
+}

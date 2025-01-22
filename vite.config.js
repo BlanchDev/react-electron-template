@@ -62,7 +62,7 @@ export default defineConfig(({ mode }) => {
     },
 
     build: {
-      outDir: "dist",
+      outDir: "dist-react",
       emptyOutDir: true,
       // Source map only during development
       sourcemap: !isProd,
