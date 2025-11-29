@@ -44,9 +44,12 @@ export function createMainWindow() {
     }
 
     win?.show();
+    win?.focus();
   });
 
-  const saveState = () => {
+  let saveTimeout: NodeJS.Timeout | null = null;
+
+  const saveBoundsState = () => {
     if (!win) return;
 
     try {
@@ -54,43 +57,44 @@ export function createMainWindow() {
       const isMinimized = win.isMinimized();
       const isMaximized = win.isMaximized();
 
-      if (isMinimized) {
-        windowBoundsStore.set("bounds", {
-          ...savedBounds,
-          isMinimized: true,
-        });
-        return;
+      const state: any = {
+        width: bounds.width,
+        height: bounds.height,
+        isMinimized,
+        isMaximized,
+      };
+
+      if (!isMaximized && !isMinimized) {
+        state.x = bounds.x;
+        state.y = bounds.y;
       }
 
-      if (isMaximized) {
-        windowBoundsStore.set("bounds", {
-          ...savedBounds,
-          isMaximized: true,
-          isMinimized: false,
-        });
-      } else {
-        windowBoundsStore.set("bounds", {
-          x: bounds.x,
-          y: bounds.y,
-          width: bounds.width,
-          height: bounds.height,
-          isMaximized: false,
-          isMinimized: false,
-        });
-      }
+      windowBoundsStore.set("bounds", state);
     } catch (e) {
       console.error("Pencere konumu kaydedilemedi:", e);
     }
   };
 
-  win.on("resize", saveState);
-  win.on("move", saveState);
-  win.on("maximize", saveState);
-  win.on("unmaximize", saveState);
-  win.on("minimize", saveState);
-  win.on("restore", saveState);
+  const debouncedSave = () => {
+    if (saveTimeout) {
+      clearTimeout(saveTimeout);
+    }
+    saveTimeout = setTimeout(() => {
+      saveBoundsState();
+      saveTimeout = null;
+    }, 1000);
+  };
 
-  win.on("close", saveState);
+  win.on("resize", debouncedSave);
+  win.on("move", debouncedSave);
+  win.on("maximize", debouncedSave);
+  win.on("unmaximize", debouncedSave);
+  win.on("minimize", debouncedSave);
+  win.on("restore", debouncedSave);
+
+  win.on("close", () => {
+    saveBoundsState();
+  });
 
   return win;
 }

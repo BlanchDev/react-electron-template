@@ -3,7 +3,6 @@ import { createMainWindow } from "./windows/main.window";
 import { registerCounterIpcHandlers } from "./utils/counter/counter.ipc";
 import { registerWindowControlIpcHandlers } from "./utils/window-utils/window-control/window-control.ipc";
 import { registerWindowSizeIpcHandlers } from "./utils/window-utils/remember-window-bounds/remember-window-bounds.ipc";
-import { windowBoundsStore } from "./utils/window-utils/remember-window-bounds/remember-window-bounds.store";
 
 app.whenReady().then(() => {
   registerWindowControlIpcHandlers();
