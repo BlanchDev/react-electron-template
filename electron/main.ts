@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain } from "electron";
+import { app, BrowserWindow } from "electron";
 import { createMainWindow } from "./windows/main.window";
 import { registerCounterIpcHandlers } from "./utils/counter/counter.ipc";
 import { registerWindowControlIpcHandlers } from "./utils/window-utils/window-control/window-control.ipc";
