@@ -17,5 +17,8 @@ app.whenReady().then(() => {
 });
 
 app.on("window-all-closed", () => {
-  if (process.platform !== "darwin") app.quit();
+  if (process.platform !== "darwin") {
+    console.log("Quitting app as all windows are closed.");
+    app.quit();
+  }
 });

@@ -1,20 +1,22 @@
 import { useEffect, useState } from "react";
 import "./ElectronTitleBar.scss";
 
+const elapi = (globalThis as any).elapi;
+
 function ElectronTitleBar() {
   const [isMaximized, setIsMaximized] = useState<boolean>(false);
 
   useEffect(() => {
     const checkMax = async () => {
       try {
-        setIsMaximized(await window.elapi.window.isMaximized());
+        setIsMaximized(await elapi.window.isMaximized());
       } catch {}
     };
     checkMax();
 
     const handleResize = () => checkMax();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    globalThis.addEventListener("resize", handleResize);
+    return () => globalThis.removeEventListener("resize", handleResize);
   }, []);
 
   return (
@@ -23,7 +25,8 @@ function ElectronTitleBar() {
       <div className='buttons row aic'>
         <button
           className='button minimize'
-          onClick={async () => await window.elapi.window.minimize()}
+          title='Minimize window'
+          onClick={async () => await elapi.window.minimize()}
         >
           <svg
             xmlns='http://www.w3.org/2000/svg'
@@ -38,7 +41,8 @@ function ElectronTitleBar() {
         {isMaximized ? (
           <button
             className='button unmaximize'
-            onClick={async () => await window.elapi.window.unmaximize()}
+            title='Restore window'
+            onClick={async () => await elapi.window.unmaximize()}
           >
             <svg
               xmlns='http://www.w3.org/2000/svg'
@@ -61,7 +65,8 @@ function ElectronTitleBar() {
         ) : (
           <button
             className='button maximize'
-            onClick={async () => await window.elapi.window.maximize()}
+            title='Maximize window'
+            onClick={async () => await elapi.window.maximize()}
           >
             <svg
               xmlns='http://www.w3.org/2000/svg'
@@ -79,7 +84,8 @@ function ElectronTitleBar() {
 
         <button
           className='button close'
-          onClick={async () => await window.elapi.window.close()}
+          title='Close window'
+          onClick={async () => await elapi.window.close()}
         >
           <svg
             xmlns='http://www.w3.org/2000/svg'
