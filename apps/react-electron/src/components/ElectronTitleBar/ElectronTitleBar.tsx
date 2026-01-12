@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import "./ElectronTitleBar.scss";
-
-const elapi = (globalThis as any).elapi;
+import { elapi } from "../../lib/elapi";
 
 function ElectronTitleBar() {
   const [isMaximized, setIsMaximized] = useState<boolean>(false);

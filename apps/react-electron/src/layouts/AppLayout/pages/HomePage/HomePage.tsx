@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { elapi } from "../../../../lib/elapi";
+import ApiTest from "src/components/ApiTest/ApiTest";
 
 function HomePage() {
   const [count, setCount] = useState<number>(21);
@@ -6,7 +8,7 @@ function HomePage() {
 
   useEffect(() => {
     const loadData = async () => {
-      const savedCount = await window.elapi.count.get();
+      const savedCount = await elapi.count.get();
       setCount(savedCount);
       setLoading(false);
     };
@@ -17,14 +19,14 @@ function HomePage() {
     const newCount = count + 1;
     setCount(newCount);
 
-    await window.elapi.count.set(newCount);
+    await elapi.count.set(newCount);
   };
 
   const handleDecrement = async () => {
     const newCount = count - 1;
     setCount(newCount);
 
-    await window.elapi.count.set(newCount);
+    await elapi.count.set(newCount);
   };
 
   if (loading) return <div>Loading...</div>;
@@ -55,6 +57,8 @@ function HomePage() {
         the application is closed and reopened.)
       </p>
       <h2>Don't forget to check that package.json versions are up to date</h2>
+
+      <ApiTest />
     </div>
   );
 }

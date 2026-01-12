@@ -1,70 +1,21 @@
 {
-  "name": "react-electron-template",
+  "name": "elysia-react-electron-monorepo",
   "private": true,
-  "version": "1.0.0",
-  "type": "module",
-  "main": "dist-electron/main.js",
-  "author": "blanch.dev",
-  "description": "React Electron Typescript Starter",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
-    "dev": "concurrently -k \"bun run dev:vite\" \"bun run dev:electron\"",
-    "dev:vite": "vite",
-    "dev:electron": "bun run build:electron && wait-on tcp:5173 && electron .",
-    "build": "vite build && bun run build:electron && electron-builder",
-    "build:electron": "bun run build:main && bun run build:preload",
-    "build:main": "bun build ./electron/main.ts --outfile=./dist-electron/main.js --target=node --external electron --external electron-store",
-    "build:preload": "bun build ./electron/preload.ts --outfile=./dist-electron/preload.js --target=node --external electron"
-  },
-  "dependencies": {
-    "electron-store": "11.0.2",
-    "react": "19.2.3",
-    "react-dom": "19.2.3",
-    "react-router-dom": "7.12.0"
+    "dev": "bun x kill-port 3000 5173 && bun run --filter '*' dev",
+    "dev:elysia": "bun x kill-port 3000 && bun run --filter @app/elysia dev",
+    "dev:react": "bun x kill-port 5173 && bun run --filter @app/react-electron dev:vite",
+    "dev:electron": "bun x kill-port 5173 && bun run --filter @app/react-electron dev",
+    "build": "bun run --filter '*' build",
+    "lint": "bun run --filter '*' lint",
+    "clean": "bun x rimraf node_modules apps/*/node_modules packages/*/node_modules dist"
   },
   "devDependencies": {
-    "@eslint/js": "9.39.2",
-    "@types/node": "25.0.6",
-    "@types/react": "19.2.8",
-    "@types/react-dom": "19.2.3",
-    "@vitejs/plugin-react": "5.1.2",
-    "cross-env": "10.1.0",
-    "electron": "39.2.7",
-    "electron-builder": "26.4.0",
-    "eslint": "9.39.2",
-    "eslint-plugin-react-hooks": "7.0.1",
-    "eslint-plugin-react-refresh": "0.4.26",
-    "globals": "17.0.0",
-    "sass": "1.97.2",
-    "typescript": "5.9.3",
-    "typescript-eslint": "8.52.0",
-    "vite": "7.3.1",
-    "vite-plugin-electron": "0.29.0",
-    "vite-plugin-electron-renderer": "0.14.6",
-    "wait-on": "^9.0.3"
-  },
-  "build": {
-    "appId": "com.example.react-electron-template",
-    "productName": "React Electron Template",
-    "directories": {
-      "output": "release"
-    },
-    "files": [
-      "dist-electron/**/*",
-      "dist/**/*",
-      "package.json"
-    ],
-    "win": {
-      "target": "nsis",
-      "icon": "public/icon.ico"
-    },
-    "mac": {
-      "target": "dmg"
-    },
-    "linux": {
-      "target": "AppImage"
-    }
-  },
-  "trustedDependencies": [
-    "@parcel/watcher"
-  ]
+    "typescript": "^5.9.3",
+    "turbo": "^2.7.4"
+  }
 }

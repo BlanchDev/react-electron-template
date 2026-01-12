@@ -18,9 +18,7 @@ declare global {
     };
   }
 
-  interface GlobalThis {
-    elapi: Window["elapi"];
-  }
+  var elapi: Window["elapi"];
 }
 
 export {};

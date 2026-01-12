@@ -1,16 +1,17 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import tsconfigPaths from "vite-tsconfig-paths";
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
-  base: "./", // Build sonrası beyaz ekran yememek için şart
+  plugins: [react(), tsconfigPaths()],
+  base: "./",
   server: {
     port: 5173,
-    strictPort: true, // Port 5173 doluysa hata ver, başka porta geçme
+    strictPort: true,
   },
   build: {
-    outDir: "dist", // React buraya derlenecek
+    outDir: "dist/react",
     emptyOutDir: true,
   },
 });

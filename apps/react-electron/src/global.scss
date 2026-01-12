@@ -28,8 +28,6 @@
 
     min-height: 0;
 
-    //text-shadow: 0px 0px 1px #000000;
-
     scroll-behavior: smooth;
 
     background-attachment: local;
@@ -66,6 +64,7 @@
 }*/
 
 html {
+    -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
 }
 
@@ -172,6 +171,7 @@ button,
 a {
     all: unset;
     cursor: pointer;
+    -webkit-user-select: none !important;
     user-select: none !important;
     position: relative;
     z-index: 2;
@@ -183,6 +183,7 @@ button:disabled {
     cursor: not-allowed !important;
     opacity: 0.5 !important;
     pointer-events: none !important;
+    -webkit-user-select: none !important;
     user-select: none !important;
 }
 
@@ -198,6 +199,10 @@ img {
 
 p {
     white-space: pre-line;
+
+    a {
+        color: rgb(55, 136, 148);
+    }
 }
 
 code {
@@ -209,12 +214,6 @@ pre {
     padding: 10px;
     border: 1px solid var(--border-color);
     background-color: var(--div-bg-end);
-}
-
-p {
-    a {
-        color: rgb(55, 136, 148);
-    }
 }
 
 h1,
@@ -254,10 +253,12 @@ h6 {
 }
 
 .wstretch {
+    // 'width: stretch' is not supported by Edge, Samsung Internet. Add 'width: -webkit-fill-available' to support Edge 79+, Samsung Internet 5.0+.
     width: stretch !important;
 }
 
 .hstretch {
+    // 'height: stretch' is not supported by Edge, Firefox, Firefox for Android, Samsung Internet. Add 'height: -webkit-fill-available' to support Edge 79+, Samsung Internet 5.0+.
     height: stretch !important;
 }
 
@@ -535,7 +536,3 @@ $spacing-values: (
         }
     }
 }
-
-/* flex end */
-// Import mobile utilities
-//@import './styles/mobile.scss';

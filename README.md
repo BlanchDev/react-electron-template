@@ -3,7 +3,7 @@
 A desktop & web application template developed using React and Electron for developers.
 
 ```bash
-git clone https://github.com/BlanchDev/react-electron-template.git
+git clone https://github.com/BlanchDev/elysia-react-electron-monorepo.git
 ```
 
 ## Features
