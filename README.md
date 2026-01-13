@@ -1,6 +1,6 @@
-# react-electron-template
+# elysia-react-electron-monorepo
 
-A desktop & web application template developed using React and Electron for developers.
+A desktop & web application starter developed using Elysia, React and Electron for developers.
 
 ```bash
 git clone https://github.com/BlanchDev/elysia-react-electron-monorepo.git
