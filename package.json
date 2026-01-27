@@ -6,13 +6,14 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "bun x kill-port 3000 5173 && bun run --filter '*' dev",
+    "dev": "bun run kill-all && bun run --filter '*' dev",
     "dev:elysia": "bun x kill-port 3000 && bun run --filter @app/elysia dev",
     "dev:react": "bun x kill-port 5173 && bun run --filter @app/react-electron dev:vite",
-    "dev:electron": "bun x kill-port 5173 && bun run --filter @app/react-electron dev",
+    "dev:electron": "bun x kill-port 5173 && bun run --filter @app/react-electron dev:electron",
     "build": "bun run --filter '*' build",
     "lint": "bun run --filter '*' lint",
-    "clean": "bun x rimraf node_modules apps/*/node_modules packages/*/node_modules dist"
+    "clean": "bun x rimraf node_modules apps/*/node_modules packages/*/node_modules dist",
+    "kill-all": "bun x kill-port 3000 5173"
   },
   "devDependencies": {
     "typescript": "^5.9.3",

@@ -14,6 +14,7 @@ declare global {
       count: {
         get: () => Promise<number>;
         set: (count: number) => Promise<number>;
+        reset: () => Promise<number>;
       };
     };
   }

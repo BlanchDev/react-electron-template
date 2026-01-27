@@ -29,6 +29,11 @@ function HomePage() {
     await elapi.count.set(newCount);
   };
 
+  const handleReset = async () => {
+    setCount(21);
+    await elapi.count.reset();
+  };
+
   if (loading) return <div>Loading...</div>;
 
   return (
@@ -51,6 +56,17 @@ function HomePage() {
         }}
       >
         Decrease (-1)
+      </button>
+      <button
+        onClick={handleReset}
+        style={{
+          padding: "10px 20px",
+          fontSize: "1.2rem",
+          cursor: "pointer",
+          marginLeft: "10px",
+        }}
+      >
+        Reset
       </button>
       <p>
         (Note: The number is preserved and continues from the last value when

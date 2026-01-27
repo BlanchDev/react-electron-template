@@ -1,38 +1,40 @@
 import { app, BrowserWindow } from "electron";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
-import { windowBoundsStore } from "../utils/window-utils/remember-window-bounds/remember-window-bounds.store";
-
-// Calculating __dirname for use in ESM modules
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+import { WindowStore } from "../utils/window-utils/remember-window-bounds/remember-window-bounds.store";
 
 let win: BrowserWindow | null;
 
 export function createMainWindow() {
-  const savedBounds = windowBoundsStore.get("bounds") || {};
+  const savedBounds = WindowStore.getBounds() || {};
 
   win = new BrowserWindow({
     frame: false, // Custom borderless window
+    titleBarStyle: "hidden",
+    autoHideMenuBar: true,
+    center: true,
+
     width: savedBounds?.width ?? 1200,
     height: savedBounds?.height ?? 860,
     x: savedBounds?.x,
     y: savedBounds?.y,
     show: false,
+    paintWhenInitiallyHidden: true,
+    backgroundColor: "#000",
 
     webPreferences: {
-      preload: path.join(__dirname, "preload.js"),
-      contextIsolation: true, // Security improvement
+      contextIsolation: true,
       nodeIntegration: false, // Never set to true
-      sandbox: false, // May be required for preload script to access Node APIs
+      sandbox: true,
+      webSecurity: true,
+      preload: path.join(app.getAppPath(), "dist/electron/preload.cjs"),
     },
   });
 
   if (app.isPackaged) {
-    // Load from dist folder when packaged
-    win.loadFile(path.join(__dirname, "../dist/index.html"));
+    win.loadURL("app://react-electron-starter/");
   } else {
     win.loadURL("http://localhost:5173");
-    win.webContents.openDevTools(); // Automatically open DevTools in development
+    win.webContents.openDevTools();
   }
 
   win.on("ready-to-show", () => {
@@ -69,9 +71,9 @@ export function createMainWindow() {
         state.y = bounds.y;
       }
 
-      windowBoundsStore.set("bounds", state);
+      WindowStore.saveBounds(state);
     } catch (e) {
-      console.error("Pencere konumu kaydedilemedi:", e);
+      console.error("Failed to save window position:", e);
     }
   };
 

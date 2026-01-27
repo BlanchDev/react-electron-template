@@ -8,9 +8,9 @@ contextBridge.exposeInMainWorld("elapi", {
     isMaximized: () => ipcRenderer.invoke("window-is-maximized"),
     close: () => ipcRenderer.invoke("window-close"),
   },
-
   count: {
     get: () => ipcRenderer.invoke("count-get"),
     set: (count: number) => ipcRenderer.invoke("count-set", count),
+    reset: () => ipcRenderer.invoke("count-reset"),
   },
 });
